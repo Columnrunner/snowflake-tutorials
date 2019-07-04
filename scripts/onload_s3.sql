@@ -8,3 +8,34 @@ create or replace stage my_s3_unload_stage url='s3://becloudready/data-analytics
 
 
 copy into @my_s3_unload_stage/ from emp_basic;
+
+
+
+
+COPY INTO 's3://<bucket>/test_data/TEST1.csv.gz'
+
+FROM TESTDB..TEST1
+
+FILE_FORMAT = 'CSVFORMAT'
+
+ CREDENTIALS = (AWS_KEY_ID = '<>'
+
+        AWS_SECRET_KEY = '<>')
+
+encryption = (type = '<>'
+
+       kms_key_id = '<>')
+
+OVERWRITE=TRUE
+
+SINGLE=TRUE;
+
+Linux/MacOS
+snowsql -c example -d sf_tuts -w SF_TUTS_WH -q 'select * from EMP_BASIC' -o output_format=csv -o header=false -o timing=false -o friendly=false  > output_file.csv
+
+Windows
+snowsql -c example -d sf_tuts -w SF_TUTS_WH -q "select * from EMP_BASIC" -o output_format=csv -o header=false -o timing=false -o friendly=false  > output_file.csv
+
+
+
+https://sqlkover.com/cool-stuff-in-snowflake-part-7-creating-tables/
